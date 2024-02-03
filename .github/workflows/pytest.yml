@@ -2,7 +2,6 @@ name: pytest
 on: push
 
 jobs:
-  # Label of the container job
   container-job:
     runs-on: ubuntu-latest
     container: python:3.12
@@ -16,19 +15,24 @@ jobs:
           --health-retries 5
 
     steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
       - name: Set up Python
-        - uses: actions/checkout@v4
-        - uses: actions/setup-python@v5
-          with:
-            python-version: '3.12'
-            cache: 'pip' # caching pip dependencies
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: 'pip'
+
+      - name: Install pip and Poetry
         run: |
           pip install -U pip
           pip install poetry
+
       - name: Install dependencies
         run: poetry install
+
       - name: Run tests
         run: pytest -vvl
         env:
-          # The hostname used to communicate with the Redis service container
           REDIS_URI: redis://redis:6379
