@@ -1,30 +1,19 @@
-name: Python Tests
+name: pytest
+on: push
 
-on:
-  push:
-    branches:
-      - main
-      - develop
-  pull_request:
-    branches:
-      - main
-      - develop
 jobs:
-  test:
+  # Label of the container job
+  container-job:
     runs-on: ubuntu-latest
+    container: python:3.12
     services:
       redis:
         image: redis
-        ports:
-          - 6379:6379
         options: >-
           --health-cmd "redis-cli ping"
           --health-interval 10s
           --health-timeout 5s
           --health-retries 5
-          --entrypoint redis-server
-          --
-          --bind 0.0.0.0
 
     steps:
       - uses: actions/checkout@v3
@@ -44,3 +33,6 @@ jobs:
         run: poetry install
       - name: Run tests
         run: pytest
+        env:
+          # The hostname used to communicate with the Redis service container
+          REDIS_URI: redis://redis:6379
