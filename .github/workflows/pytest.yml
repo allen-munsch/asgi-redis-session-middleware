@@ -24,6 +24,11 @@ jobs:
           python-version: '3.12'
           cache: 'pip'
 
+      - name: Install lsb_release
+        run: |
+          apt-get update
+          apt-get install -y lsb-release
+
       - name: Install pip and Poetry
         run: |
           pip install -U pip
