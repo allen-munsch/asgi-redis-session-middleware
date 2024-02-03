@@ -1,34 +1,15 @@
-import asyncio
 import json
 import pickle
-from sqlite3 import IntegrityError
-import sys
 import uuid
 from base64 import b64decode, b64encode
-from typing import Any, Union
-from itsdangerous import BadSignature
-import itsdangerous
-import sqlalchemy
+from typing import Any, Literal, Union
 from starlette.datastructures import Secret, MutableHeaders
 from starlette.middleware.sessions import SessionMiddleware
 from starlette.requests import HTTPConnection
-from starlette.authentication import BaseUser, UnauthenticatedUser
 from starlette.types import ASGIApp, Message, Receive, Scope, Send
 from redis.asyncio import Redis as AsyncRedis
-from starlette.authentication import (
-    AuthCredentials, AuthenticationBackend, AuthenticationError, SimpleUser
-)
-import base64
-import binascii
-from vertexai_loaders.config import get_redis_config
-from vertexai_loaders.db.session import get_db
-from vertexai_loaders.services.user import create_user, get_user_selected_history
+from itsdangerous import BadSignature
 import logging
-
-if sys.version_info >= (3, 8):
-    from typing import Literal
-else:
-    from typing_extensions import Literal
 
 log = logging.getLogger(__name__)
 

@@ -1,0 +1,27 @@
+[tool.poetry]
+name = "asgi-redis-session-middleware"
+version = "0.1.0"
+description = ""
+authors = ["allen-munsch <james.a.munsch@gmail.com>"]
+license = "BSD-3"
+readme = "README.md"
+packages = [
+    { include = "asgi_redis_session_middleware", from = "src"},
+]
+[tool.poetry.dependencies]
+python = "^3.10"
+starlette = "^0.36.1"
+redis = "^5.0.1"
+itsdangerous = "^2.1.2"
+httpx = "^0.26.0"
+
+
+[tool.poetry.group.dev.dependencies]
+pytest = "7.4.4"
+pytest-mock = "^3.12.0"
+pytest-asyncio = "^0.23.4"
+pytest-env = "^1.1.3"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
