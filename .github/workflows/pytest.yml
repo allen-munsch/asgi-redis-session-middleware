@@ -25,7 +25,6 @@ jobs:
           --entrypoint redis-server
           --
           --bind 0.0.0.0
-          --requirepass ""
 
     steps:
       - uses: actions/checkout@v3
