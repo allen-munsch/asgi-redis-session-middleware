@@ -24,15 +24,12 @@ jobs:
           python-version: 3.12
       - name: Install Poetry
         run: |
-          curl -sSL https://install.python-poetry.org | python3 -
-      - name: Configure Poetry
-        run: |
-          echo "$HOME/.local/bin" >> $GITHUB_PATH
-          poetry config virtualenvs.create false
+          pip install -U pip
+          pip install poetry
       - name: Install dependencies
         run: poetry install
       - name: Run tests
-        run: pytest
+        run: pytest -vvl
         env:
           # The hostname used to communicate with the Redis service container
           REDIS_URI: redis://redis:6379
